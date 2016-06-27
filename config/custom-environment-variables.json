@@ -1,3 +1,4 @@
 {
-  "pace-url": "PACE_URL"
+  "pace-url": "PACE_URL",
+  "redishost": "REDISHOST"
 }
