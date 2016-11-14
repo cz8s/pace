@@ -1,19 +1,26 @@
 sudo: required
 language: node_js
 node_js:
-  - "6.1"
+- '6.1'
 services:
-  - docker
+- docker
 before_install:
-  - sudo service postgresql stop
-  - docker pull postgres
-  - docker run -p 127.0.0.1:5432:5432 -d --name 'pace-postgres' -e POSTGRES_PASSWORD='pgtester' -e POSTGRES_DB='pace' -e POSTGRES_USER='pgtester' postgres
-  - docker ps -a
+- sudo service postgresql stop
+- docker pull postgres
+- docker run -p 127.0.0.1:5432:5432 -d --name 'pace-postgres' -e POSTGRES_PASSWORD='pgtester'
+  -e POSTGRES_DB='pace' -e POSTGRES_USER='pgtester' postgres
+- docker ps -a
 before_script:
-  - npm install -g gulp
-  - gulp selenium-install
-  - ./node_modules/db-migrate/bin/db-migrate up
-script: 
-  - gulp test 
-  - gulp test-integration
-  - gulp test-functional
+- npm install -g gulp
+- gulp selenium-install
+- "./node_modules/db-migrate/bin/db-migrate up"
+script:
+- gulp test
+- gulp test-integration
+- gulp test-functional
+deploy:
+  provider: heroku
+  app: cz8s-pace
+  run: db-migrate -e prod -v up
+  api_key:
+    secure: SUeLjUxBIvKyNyH2om2qPc73507cj1xgJYZJMAj6SDlNtHHOUZevOfx6NENAytD8KlRK+ivIoP5bKA91tcy5gwGiLgw68oNP/4oQY7gNYB7CRIDbz8yeojjuyLWTPZvsIN7brkdgQ3v6AB9JRHxyV3KwqF8nnY4n24OIFFnf4rP4jY7ILjKMOP8yQmucV9O7CHuu5jCp7nz/Ku6fke0NqFWfqUpTkayRjjWY510iVnafpgA1VFsAM5KrSsdlRFUlc/1XdBzTrRIguDoKjw0JVADjvq4N+7qbgww4xVxx4EfBpDmvGqM7CLlE3OWWZtpAVrjs+2MpiaqY/hteXO4sta7A8sNbRDAxcN475poxKileMpMRuxKb+hMRxYOluGdUhtR4WHSmXiiPoI45cd24sL8DXhTAftayy23/VBVPUOvUI1Qk2RJPEpXomcKr0q+dNLNqGGdxjpwnmn+FdV+/OLY9t8Prebknec5cgLC+9cIHwKV5O/poIML47G+uYss4pMTshkMotF2TqSfXSor3jQwlnXFEmE2hHWDREgGs5xuespUDEvp8RNLpr0Wmyj8Jv/v3mlyB+yQeDj/I+P6+Xg+3evsG6QK2lPHnEUWA0gLb3/P5whkgRLgH+Ky3Imj2Fk34Tw1B71zVhlpFekezZALr9mAYK5rJOUywUkYlJrM=
