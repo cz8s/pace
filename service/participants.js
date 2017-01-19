@@ -233,16 +233,13 @@ participants.markPayed = (participantId) => {
     });
 };
 
-participants.updateTime = (startnumber, finishtime) => {
+participants.updateTime = (startnumber, seconds) => {
   return participants.byStartnumber(startnumber)
     .then(participant => {
-      return race.startTime().then((startTimes) => {
-        let seconds = timeCalculator.relativeSeconds(startTimes,finishtime,participant.start_block);
-        if ((finishtime <= participant.time ) || _.isEmpty(participant.time)) {
-          return db.update('update participants set time=$2,seconds=$3 where start_number=$1', [startnumber, finishtime, seconds]);
+        if ((seconds <= participant.seconds ) || _.isEmpty(participant.seconds)) {
+          return db.update('update participants set seconds=$1 where start_number=$2', [seconds,startnumber]);
         }
       });
-    });
 };
 
 participants.insertTime = (startnumber, timestring) => {
