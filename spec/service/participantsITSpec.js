@@ -118,7 +118,7 @@ describe('participants service', () => {
           expect(participant.visibility).toBe('yes');
           expect(participant.discount).toBe('no');
 
-          expect(participant.has_payed).toBe(false);
+          expect(participant.has_payed).toBe(true);
           expect(participant.start_number).toBe(startNumber);
           expect(participant.start_block).toBe(null);
           expect(participant.secureid).toBeDefined();

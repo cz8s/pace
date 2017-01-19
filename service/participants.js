@@ -20,9 +20,9 @@ let participants = {};
 
 participants.allWithPaymentStatus = (paymentStatus) => {
   if (_.isUndefined(paymentStatus)) {
-    return db.select('select * from participants where firstname != \'\' order by firstname,lastname');
+    return db.select('select * from participants order by firstname,lastname');
   } else {
-    return db.select('select * from participants where has_payed = $1 and firstname != \'\' order by firstname,lastname', [paymentStatus]);
+    return db.select('select * from participants where has_payed = $1 order by firstname,lastname', [paymentStatus]);
   }
 };
 
@@ -112,7 +112,7 @@ participants.saveBlanc = (startnumber) => {
     start_number: startnumber,
     start_block: participants.choseStartBlock(startnumber),
     is_on_site_registration: true,
-    has_payed: false,
+    has_payed: true,
     goal: 'relaxed'
   };
 
