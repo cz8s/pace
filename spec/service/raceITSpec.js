@@ -66,6 +66,7 @@ describe('race service', () => {
         .then(() => participants.save(aParticipantWithDifferentTeam))
         .then(() => participants.insertTime(aParticipantWithDifferentTeam.start_number,
           '10:35:00'))
+        .then(() => startblocks.assign())
         .then(done)
         .catch(done.fail);
     });
